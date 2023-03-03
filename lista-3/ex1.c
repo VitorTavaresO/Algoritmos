@@ -13,3 +13,12 @@ int main ()
             compare = strcmp(palavra, "fim");
         }
 }
+
+/*int main (){
+    char nome[25];
+    printf("Digite um nome: ");
+    gets(nome);
+    printf("O nome que voce digitou e: ");
+    puts(nome);
+    return 0;
+}*/
