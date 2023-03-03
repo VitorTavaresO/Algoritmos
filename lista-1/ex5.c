@@ -11,4 +11,5 @@ int main()
     media = (primeiroNumero + segundoNumero)/2;
 
     printf("%f", media);
+    
 }

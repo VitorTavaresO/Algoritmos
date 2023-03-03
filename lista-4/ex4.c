@@ -15,4 +15,5 @@ int main (){
         printf("%.2f\n", num[i]);
     }
     return 0;
+    
 }

@@ -11,4 +11,5 @@ int main ()
         }
     media = valor / 10.0;
     printf("%f", media);
+    
 }
