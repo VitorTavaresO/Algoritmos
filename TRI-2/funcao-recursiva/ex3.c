@@ -10,9 +10,9 @@ int pg (int input, int first, int ratio){
 
 int main (){
     int input, ratio;
-    printf("Digite a posicao da pg: ");
+    printf("Digite qual termo da pg quer saber: ");
     scanf("%d", &input);
-    printf("Digite a razao: ");
+    printf("Digite a razao da pg: ");
     scanf("%d", &ratio);
     printf("O termo %d da PG eh %d", input, pg(input, 1, ratio));
     return 0;
