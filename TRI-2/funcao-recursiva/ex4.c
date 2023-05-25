@@ -6,7 +6,7 @@ int somaDigitos (int input){
     } else {
         return input % 10 + somaDigitos(input / 10);
     }
-}
+}51
 
 int main (){
     int input;
