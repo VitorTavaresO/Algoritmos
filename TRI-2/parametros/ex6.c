@@ -1,0 +1,1 @@
+void converteHora(int total segundos, int *hora, int *min, int *seg)
