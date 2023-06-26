@@ -10,7 +10,7 @@ void main()
     int left, right, middle;
     left = 0;
     right = 5;
-    do
+    while (left <= right)
     {
         middle = (left + right) / 2;
         if (numero[middle] == value)
@@ -26,5 +26,5 @@ void main()
         {
             right = middle - 1;
         }
-    } while (left <= right);
+    }
 }
