@@ -1,5 +1,5 @@
 #include <stdio.h>
-int numero[4] = {1, 2, 3, 4};
+int numero[5] = {1, 2, 3, 4, 5};
 
 void main()
 {
@@ -9,7 +9,7 @@ void main()
 
     int left, right, middle;
     left = 0;
-    right = 4;
+    right = 5;
     do
     {
         middle = (left + right) / 2;
