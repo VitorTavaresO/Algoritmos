@@ -3,9 +3,9 @@ int numero[4] = {4, 2, 1, 3};
 void main(void)
 {
     int i, j, aux, n;
-    for (i = 3; i > 0; i--)
+    for (i = 2; i >= 0; i--)
     {
-        for (j = 0; j < i; j++)
+        for (j = 0; j <= i; j++)
         {
             if (numero[j] > numero[j + 1])
             {

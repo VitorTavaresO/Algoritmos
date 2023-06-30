@@ -1,15 +1,14 @@
 #include <stdio.h>
-int numero[5] = {1, 2, 3, 4, 5};
 
 void main()
 {
+    int numero[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int i, value;
     printf("Valor a ser buscado: ");
     scanf("%d", &value);
-
     int left, right, middle;
     left = 0;
-    right = 5;
+    right = 10;
     while (left <= right)
     {
         middle = (left + right) / 2;
