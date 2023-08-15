@@ -16,4 +16,7 @@ int main()
     *ponta = z;
 
     printf("x = %d\ny = %d\n", x, y);
+
+    ponta = NULL;
+    pontb = NULL;
 }
