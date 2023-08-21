@@ -14,9 +14,8 @@ struct Student
     int ano;
 };
 
-void readFile(int *rowNumbers, FILE *file)
+void countFileLines(int *rowNumbers, FILE *file)
 {
-    //------------------------------- READ FILE -------------------------------//
     char line[100];
 
     while (fgets(line, sizeof(line), file) != NULL)
@@ -25,27 +24,33 @@ void readFile(int *rowNumbers, FILE *file)
     }
 }
 
-void readValues(int *rowNumbers, FILE *file, struct Student student[10])
+void readValues(int *rowNumbers, FILE *file, struct Student student[*rowNumbers])
 {
     rewind(file);
     int i = 0;
     while (
         fscanf(file, "%d;%d;%d;%d;%d;%d;%d", &student[i].student, &student[i].disc1, &student[i].disc2, &student[i].disc3, &student[i].disc4, &student[i].disc5, &student[i].ano) == 7)
     {
-        printf("Aluno: %d\n", student[i].student);
-        printf("Disciplina 1: %d\n", student[i].disc1);
-        printf("Disciplina 2: %d\n", student[i].disc2);
-        printf("Disciplina 3: %d\n", student[i].disc3);
-        printf("Disciplina 4: %d\n", student[i].disc4);
-        printf("Disciplina 5: %d\n", student[i].disc5);
-        printf("Ano: %d\n", student[i].ano);
         i++;
     }
-    //------------------------------- WRITE STRUCT -------------------------------//
 }
 
-float calculateAverage()
+float calculateAverage(int *rowNumbers, struct Student student[*rowNumbers])
 {
+    int i;
+    int minYear = student[0].ano;
+    int maxYear = student[0].ano;
+    for (i = 0; i < *rowNumbers; i++)
+    {
+        if (student[i].ano < minYear)
+        {
+            minYear = student[i].ano;
+        }
+        else if (student[i].ano > maxYear)
+        {
+            maxYear = student[i].ano;
+        }
+    }
 }
 int main()
 {
@@ -56,15 +61,21 @@ int main()
     int rowNumbers;
     FILE *file;
 
-    file = fopen("dados.txt", "r");
+    file = fopen("dadosTest.txt", "r");
 
     if (file == NULL)
     {
         printf("Erro ao abrir o arquivo\n");
     }
-    readFile(&rowNumbers, file);
+
+    countFileLines(&rowNumbers, file);
+
     struct Student student[rowNumbers];
+
     readValues(&rowNumbers, file, student);
+    fclose(file);
+
+    calculateAverage(&rowNumbers, student);
 
     end = clock();
 
