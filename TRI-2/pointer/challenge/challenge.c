@@ -14,32 +14,25 @@ struct Student
     int ano;
 };
 
-void readValues(int *rowNumbers)
+void readFile(int *rowNumbers, FILE *file)
 {
     //------------------------------- READ FILE -------------------------------//
-    FILE *file;
     char line[100];
-    file = fopen("dados.txt", "r");
-
-    if (file == NULL)
-    {
-        printf("Erro ao abrir o arquivo\n");
-    }
 
     while (fgets(line, sizeof(line), file) != NULL)
     {
         *rowNumbers += 1;
     }
+}
 
-    //------------------------------- WRITE STRUCT -------------------------------//
-
+void readValues(int *rowNumbers, FILE *file, struct Student student[10])
+{
     rewind(file);
-    struct Student student[*rowNumbers];
     int i = 0;
     while (
         fscanf(file, "%d;%d;%d;%d;%d;%d;%d", &student[i].student, &student[i].disc1, &student[i].disc2, &student[i].disc3, &student[i].disc4, &student[i].disc5, &student[i].ano) == 7)
     {
-        printf("student: %d\n", student[i].student);
+        printf("Aluno: %d\n", student[i].student);
         printf("Disciplina 1: %d\n", student[i].disc1);
         printf("Disciplina 2: %d\n", student[i].disc2);
         printf("Disciplina 3: %d\n", student[i].disc3);
@@ -50,14 +43,28 @@ void readValues(int *rowNumbers)
     }
     //------------------------------- WRITE STRUCT -------------------------------//
 }
+
+float calculateAverage()
+{
+}
 int main()
 {
     clock_t start, end;
     double time_spent;
-    int rowNumbers = 0;
-
     start = clock();
-    readValues(&rowNumbers);
+
+    int rowNumbers;
+    FILE *file;
+
+    file = fopen("dados.txt", "r");
+
+    if (file == NULL)
+    {
+        printf("Erro ao abrir o arquivo\n");
+    }
+    readFile(&rowNumbers, file);
+    struct Student student[rowNumbers];
+    readValues(&rowNumbers, file, student);
 
     end = clock();
 
