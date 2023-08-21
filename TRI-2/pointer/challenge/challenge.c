@@ -3,9 +3,9 @@
 #include <string.h>
 #include <time.h>
 
-struct Aluno
+struct Student
 {
-    int aluno;
+    int student;
     int disc1;
     int disc2;
     int disc3;
@@ -14,73 +14,57 @@ struct Aluno
     int ano;
 };
 
-int readValues()
+void readValues(int *rowNumbers)
 {
+    //------------------------------- READ FILE -------------------------------//
     FILE *file;
-    char *token;
     char line[100];
-
     file = fopen("dados.txt", "r");
 
     if (file == NULL)
     {
         printf("Erro ao abrir o arquivo\n");
-        return 1;
     }
 
     while (fgets(line, sizeof(line), file) != NULL)
     {
-        token = strtok(line, ";");
-        while (token != NULL)
-        {
-            printf("%s\n", token);
-            token = strtok(NULL, ";");
-        }
+        *rowNumbers += 1;
     }
 
-    fclose(file);
-    return 0;
-}
+    //------------------------------- WRITE STRUCT -------------------------------//
 
-int countLine(int *qtdLine)
-{
-    FILE *file;
-    char line[100];
-
-    file = fopen("dados.txt", "r");
-
-    if (file == NULL)
+    rewind(file);
+    struct Student student[*rowNumbers];
+    int i = 0;
+    while (
+        fscanf(file, "%d;%d;%d;%d;%d;%d;%d", &student[i].student, &student[i].disc1, &student[i].disc2, &student[i].disc3, &student[i].disc4, &student[i].disc5, &student[i].ano) == 7)
     {
-        printf("Erro ao abrir o arquivo\n");
-        return 1;
+        printf("student: %d\n", student[i].student);
+        printf("Disciplina 1: %d\n", student[i].disc1);
+        printf("Disciplina 2: %d\n", student[i].disc2);
+        printf("Disciplina 3: %d\n", student[i].disc3);
+        printf("Disciplina 4: %d\n", student[i].disc4);
+        printf("Disciplina 5: %d\n", student[i].disc5);
+        printf("Ano: %d\n", student[i].ano);
+        i++;
     }
-
-    while (fgets(line, sizeof(line), file) != NULL)
-    {
-        *qtdLine += 1;
-    }
-
-    fclose(file);
-    return 0;
+    //------------------------------- WRITE STRUCT -------------------------------//
 }
-
 int main()
 {
-    clock_t inicio, fim;
-    double tempo_gasto;
-    int qtdLine = 0;
+    clock_t start, end;
+    double time_spent;
+    int rowNumbers = 0;
 
-    inicio = clock();
+    start = clock();
+    readValues(&rowNumbers);
 
-    readValues();
-    countLine(&qtdLine);
+    end = clock();
 
-    fim = clock();
+    time_spent = ((double)(end - start)) / CLOCKS_PER_SEC;
 
-    tempo_gasto = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
-
-    printf("Tempo gasto: %.6f segundos\n", tempo_gasto);
-    printf("%d\n", qtdLine);
+    printf("Tempo gasto: %.6f segundos\n", time_spent);
+    printf("%d\n", rowNumbers);
 
     return 0;
 }
