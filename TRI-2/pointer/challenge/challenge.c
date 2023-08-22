@@ -12,7 +12,7 @@ struct Student
     int disc3;
     int disc4;
     int disc5;
-    int ano;
+    int year;
 };
 
 void countFileLines(int *rowNumbers, FILE *file)
@@ -30,26 +30,44 @@ void readValues(int *rowNumbers, FILE *file, struct Student student[*rowNumbers]
     rewind(file);
     int i = 0;
     while (
-        fscanf(file, "%d;%d;%d;%d;%d;%d;%d", &student[i].student, &student[i].disc1, &student[i].disc2, &student[i].disc3, &student[i].disc4, &student[i].disc5, &student[i].ano) == 7)
+        fscanf(file, "%d;%d;%d;%d;%d;%d;%d", &student[i].student, &student[i].disc1, &student[i].disc2, &student[i].disc3, &student[i].disc4, &student[i].disc5, &student[i].year) == 7)
     {
         i++;
+    }
+}
+
+void sortedStruct(int *rowNumbers, struct Student student[*rowNumbers])
+{
+    int i, j;
+    struct Student aux;
+    for (i = 0; i < *rowNumbers; i++)
+    {
+        for (j = i + 1; j < *rowNumbers; j++)
+        {
+            if (student[i].year > student[j].year)
+            {
+                aux = student[i];
+                student[i] = student[j];
+                student[j] = aux;
+            }
+        }
     }
 }
 
 float calculateAveragePerYear(int *rowNumbers, struct Student student[*rowNumbers])
 {
     int i;
-    int minYear = student[0].ano;
-    int maxYear = student[0].ano;
+    int minYear = student[0].year;
+    int maxYear = student[0].year;
     for (i = 0; i < *rowNumbers; i++)
     {
-        if (student[i].ano < minYear)
+        if (student[i].year < minYear)
         {
-            minYear = student[i].ano;
+            minYear = student[i].year;
         }
-        else if (student[i].ano > maxYear)
+        else if (student[i].year > maxYear)
         {
-            maxYear = student[i].ano;
+            maxYear = student[i].year;
         }
     }
     int j;
@@ -60,7 +78,7 @@ float calculateAveragePerYear(int *rowNumbers, struct Student student[*rowNumber
     {
         for (j = 0; j < *rowNumbers; j++)
         {
-            if (student[j].ano == i)
+            if (student[j].year == i)
             {
                 average[0] += student[j].disc1;
                 average[1] += student[j].disc2;
@@ -70,7 +88,7 @@ float calculateAveragePerYear(int *rowNumbers, struct Student student[*rowNumber
                 count++;
             }
         }
-        printf("Ano: %d\n", i);
+        printf("year: %d\n", i);
         printf("Media Disciplina 1: %.2f\n", average[0] / count);
         printf("Media Disciplina 2: %.2f\n", average[1] / count);
         printf("Media Disciplina 3: %.2f\n", average[2] / count);
@@ -89,17 +107,17 @@ float calculateAveragePerYear(int *rowNumbers, struct Student student[*rowNumber
 float calculateMedianPerYear(int *rowNumbers, struct Student student[*rowNumbers])
 {
     int i;
-    int minYear = student[0].ano;
-    int maxYear = student[0].ano;
+    int minYear = student[0].year;
+    int maxYear = student[0].year;
     for (i = 0; i < *rowNumbers; i++)
     {
-        if (student[i].ano < minYear)
+        if (student[i].year < minYear)
         {
-            minYear = student[i].ano;
+            minYear = student[i].year;
         }
-        else if (student[i].ano > maxYear)
+        else if (student[i].year > maxYear)
         {
-            maxYear = student[i].ano;
+            maxYear = student[i].year;
         }
     }
 
@@ -109,7 +127,7 @@ float calculateMedianPerYear(int *rowNumbers, struct Student student[*rowNumbers
         int count = 0;
         for (j = 0; j < *rowNumbers; j++)
         {
-            if (student[j].ano == i)
+            if (student[j].year == i)
             {
                 count++;
             }
@@ -334,7 +352,7 @@ void ex05(int *rowNumbers, struct Student student[*rowNumbers])
     int i = 0;
     for (i = 0; i < *rowNumbers; i++)
     {
-        fprintf(sortedFile, "%d;%d;%d;%d;%d;%d;%d\n", student[i].student, student[i].disc1, student[i].disc2, student[i].disc3, student[i].disc4, student[i].disc5, student[i].ano);
+        fprintf(sortedFile, "%d;%d;%d;%d;%d;%d;%d\n", student[i].student, student[i].disc1, student[i].disc2, student[i].disc3, student[i].disc4, student[i].disc5, student[i].year);
     }
 }
 int main()
@@ -359,6 +377,8 @@ int main()
     struct Student student[rowNumbers];
 
     readValues(&rowNumbers, file, student);
+
+    sortedStruct(&rowNumbers, student);
 
     ex02(&rowNumbers, student);
 
