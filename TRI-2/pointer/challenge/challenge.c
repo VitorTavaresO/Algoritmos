@@ -329,8 +329,13 @@ void ex04(int *rowNumbers, struct Student student[*rowNumbers])
 
 void ex05(int *rowNumbers, struct Student student[*rowNumbers])
 {
-    FILE *file;
-    file = fopen("ordenados.txt", "w");
+    FILE *sortedFile;
+    sortedFile = fopen("ordenados.txt", "w");
+    int i = 0;
+    for (i = 0; i < *rowNumbers; i++)
+    {
+        fprintf(sortedFile, "%d;%d;%d;%d;%d;%d;%d\n", student[i].student, student[i].disc1, student[i].disc2, student[i].disc3, student[i].disc4, student[i].disc5, student[i].ano);
+    }
 }
 int main()
 {
@@ -360,6 +365,8 @@ int main()
     ex03(&rowNumbers, student);
 
     ex04(&rowNumbers, student);
+
+    ex05(&rowNumbers, student);
 
     fclose(file);
 
