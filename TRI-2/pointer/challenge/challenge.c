@@ -50,82 +50,140 @@ void readValues(int *rowNumbers, FILE *file, struct Student student[*rowNumbers]
     }
 }
 
-float ex01(int *rowNumbers, struct Student student[*rowNumbers])
+void ex01(int *rowNumbers, struct Student student[*rowNumbers])
 {
-    int i = student[0].year;
-    int j;
-    float average[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
-    float medianDisc1[*rowNumbers];
-    float medianDisc2[*rowNumbers];
-    float medianDisc3[*rowNumbers];
-    float medianDisc4[*rowNumbers];
-    float medianDisc5[*rowNumbers];
-
-    int count = 0;
-    while (i <= student[*rowNumbers - 1].year)
+    int i = 0;
+    while (i < *rowNumbers)
     {
-        for (j = 0; j < *rowNumbers; j++)
+        int currentYear = student[i].year;
+        int yearCount = 0;
+        float average[5] = {0.0, 0.0, 0.0, 0.0, 0.0};
+        float medianDisc1[*rowNumbers];
+        float medianDisc2[*rowNumbers];
+        float medianDisc3[*rowNumbers];
+        float medianDisc4[*rowNumbers];
+        float medianDisc5[*rowNumbers];
+
+        while (student[i].year == currentYear)
         {
-            if (student[j].year == i)
+            average[0] += student[i].disc1;
+            average[1] += student[i].disc2;
+            average[2] += student[i].disc3;
+            average[3] += student[i].disc4;
+            average[4] += student[i].disc5;
+
+            medianDisc1[yearCount] = student[i].disc1;
+            medianDisc2[yearCount] = student[i].disc2;
+            medianDisc3[yearCount] = student[i].disc3;
+            medianDisc4[yearCount] = student[i].disc4;
+            medianDisc5[yearCount] = student[i].disc5;
+
+            i++;
+            yearCount++;
+        }
+
+        // Média
+        float avg1 = average[0] / yearCount;
+        float avg2 = average[1] / yearCount;
+        float avg3 = average[2] / yearCount;
+        float avg4 = average[3] / yearCount;
+        float avg5 = average[4] / yearCount;
+
+        printf("Ano: %d\n", currentYear);
+        printf("Media disciplina 1: %.2f\n", avg1);
+        printf("Media disciplina 2: %.2f\n", avg2);
+        printf("Media disciplina 3: %.2f\n", avg3);
+        printf("Media disciplina 4: %.2f\n", avg4);
+        printf("Media disciplina 5: %.2f\n", avg5);
+        printf("\n");
+
+        // Ordenação para Mediana
+        int j;
+        for (j = 0; i < yearCount; i++)
+        {
+            for (j = i + 1; j < yearCount; j++)
             {
-                average[0] += student[j].disc1;
-                average[1] += student[j].disc2;
-                average[2] += student[j].disc3;
-                average[3] += student[j].disc4;
-                average[4] += student[j].disc5;
-                count++;
+                if (medianDisc1[i] > medianDisc1[j])
+                {
+                    float aux = medianDisc1[i];
+                    medianDisc1[i] = medianDisc1[j];
+                    medianDisc1[j] = aux;
+                }
+                if (medianDisc2[i] > medianDisc2[j])
+                {
+                    float aux = medianDisc2[i];
+                    medianDisc2[i] = medianDisc2[j];
+                    medianDisc2[j] = aux;
+                }
+                if (medianDisc3[i] > medianDisc3[j])
+                {
+                    float aux = medianDisc3[i];
+                    medianDisc3[i] = medianDisc3[j];
+                    medianDisc3[j] = aux;
+                }
+                if (medianDisc4[i] > medianDisc4[j])
+                {
+                    float aux = medianDisc4[i];
+                    medianDisc4[i] = medianDisc4[j];
+                    medianDisc4[j] = aux;
+                }
+                if (medianDisc5[i] > medianDisc5[j])
+                {
+                    float aux = medianDisc5[i];
+                    medianDisc5[i] = medianDisc5[j];
+                    medianDisc5[j] = aux;
+                }
             }
         }
-        printf("Ano: %d\n", i);
-        printf("Media da Primeira Disciplina por Ano: %.2f\n", average[0] / count);
-        printf("Media da Segunda Disciplina por Ano: %.2f\n", average[1] / count);
-        printf("Media da Terceira Disciplina por Ano: %.2f\n", average[2] / count);
-        printf("Media da Quarta Disciplina por Ano: %.2f\n", average[3] / count);
-        printf("Media da Quinta Disciplina por Ano: %.2f\n", average[4] / count);
+
+        if (yearCount % 2 == 0)
+        {
+            printf("Mediana disciplina 1: %.2f\n", (medianDisc1[yearCount / 2] + medianDisc1[(yearCount / 2) - 1]) / 2);
+            printf("Mediana disciplina 2: %.2f\n", (medianDisc2[yearCount / 2] + medianDisc2[(yearCount / 2) - 1]) / 2);
+            printf("Mediana disciplina 3: %.2f\n", (medianDisc3[yearCount / 2] + medianDisc3[(yearCount / 2) - 1]) / 2);
+            printf("Mediana disciplina 4: %.2f\n", (medianDisc4[yearCount / 2] + medianDisc4[(yearCount / 2) - 1]) / 2);
+            printf("Mediana disciplina 5: %.2f\n", (medianDisc5[yearCount / 2] + medianDisc5[(yearCount / 2) - 1]) / 2);
+            printf("\n");
+        }
+        else
+        {
+            printf("Mediana disciplina 1: %.2f\n", medianDisc1[yearCount / 2]);
+            printf("Mediana disciplina 2: %.2f\n", medianDisc2[yearCount / 2]);
+            printf("Mediana disciplina 3: %.2f\n", medianDisc3[yearCount / 2]);
+            printf("Mediana disciplina 4: %.2f\n", medianDisc4[yearCount / 2]);
+            printf("Mediana disciplina 5: %.2f\n", medianDisc5[yearCount / 2]);
+            printf("\n");
+        }
+
+        float var1, var2, var3, var4, var5;
+        for (j = 0; j < yearCount; j++)
+        {
+            var1 += pow((medianDisc1[j] - avg1), 2);
+            var2 += pow((medianDisc2[j] - avg2), 2);
+            var3 += pow((medianDisc3[j] - avg3), 2);
+            var4 += pow((medianDisc4[j] - avg4), 2);
+            var5 += pow((medianDisc5[j] - avg5), 2);
+        }
+
+        float stdDev1 = sqrt(var1 / yearCount);
+        float stdDev2 = sqrt(var2 / yearCount);
+        float stdDev3 = sqrt(var3 / yearCount);
+        float stdDev4 = sqrt(var4 / yearCount);
+        float stdDev5 = sqrt(var5 / yearCount);
+
+        printf("Desvio padrao disciplina 1: %.2f\n", stdDev1);
+        printf("Desvio padrao disciplina 2: %.2f\n", stdDev2);
+        printf("Desvio padrao disciplina 3: %.2f\n", stdDev3);
+        printf("Desvio padrao disciplina 4: %.2f\n", stdDev4);
+        printf("Desvio padrao disciplina 5: %.2f\n", stdDev5);
+        printf("\n");
+
+        // Reset vetor média
         average[0] = 0.0;
         average[1] = 0.0;
         average[2] = 0.0;
         average[3] = 0.0;
         average[4] = 0.0;
-        count = 0;
-        i++;
-    }
-    i = student[0].year;
-    count = 0;
-    while (i <= student[*rowNumbers - 1].year)
-    {
-        for (j = 0; j < *rowNumbers; j++)
-        {
-            if (student[j].year == i)
-            {
-                medianDisc1[count] = student[j].disc1;
-                medianDisc2[count] = student[j].disc2;
-                medianDisc3[count] = student[j].disc3;
-                medianDisc4[count] = student[j].disc4;
-                medianDisc5[count] = student[j].disc5;
-                count++;
-            }
-        }
-        if (count % 2 == 0)
-        {
-            printf("Ano: %d\n", i);
-            printf("Mediana da Primeira Disciplica por Ano: %.2f\n", (medianDisc1[(count / 2) - 1] + medianDisc1[(count / 2)]) / 2);
-            printf("Mediana da Segunda Disciplica por Ano: %.2f\n", (medianDisc2[(count / 2) - 1] + medianDisc2[(count / 2)]) / 2);
-            printf("Mediana da Terceira Disciplica por Ano: %.2f\n", (medianDisc3[(count / 2) - 1] + medianDisc3[(count / 2)]) / 2);
-            printf("Mediana da Quarta Disciplica por Ano: %.2f\n", (medianDisc4[(count / 2) - 1] + medianDisc4[(count / 2)]) / 2);
-            printf("Mediana da Quinta Disciplica por Ano: %.2f\n", (medianDisc5[(count / 2) - 1] + medianDisc5[(count / 2)]) / 2);
-        }
-        else
-        {
-            printf("Ano: %d\n", i);
-            printf("Mediana da Primeira Disciplica por Ano: %.2f\n", medianDisc1[(count / 2)]);
-            printf("Mediana da Segunda Disciplica por Ano: %.2f\n", medianDisc2[(count / 2)]);
-            printf("Mediana da Terceira Disciplica por Ano: %.2f\n", medianDisc3[(count / 2)]);
-            printf("Mediana da Quarta Disciplica por Ano: %.2f\n", medianDisc4[(count / 2)]);
-            printf("Mediana da Quinta Disciplica por Ano: %.2f\n", medianDisc5[(count / 2)]);
-        }
-        i++;
-        count = 0;
     }
 }
 
@@ -231,11 +289,11 @@ void ex02(int *rowNumbers, struct Student student[*rowNumbers])
     float var1, var2, var3, var4, var5;
     for (i = 0; i < *rowNumbers; i++)
     {
-        var1 += (student[i].disc1 - avg1) * (student[i].disc1 - avg1);
-        var2 += (student[i].disc2 - avg2) * (student[i].disc2 - avg2);
-        var3 += (student[i].disc3 - avg3) * (student[i].disc3 - avg3);
-        var4 += (student[i].disc4 - avg4) * (student[i].disc4 - avg4);
-        var5 += (student[i].disc5 - avg5) * (student[i].disc5 - avg5);
+        var1 += pow((student[i].disc1 - avg1), 2);
+        var2 += pow((student[i].disc2 - avg2), 2);
+        var3 += pow((student[i].disc3 - avg3), 2);
+        var4 += pow((student[i].disc4 - avg4), 2);
+        var5 += pow((student[i].disc5 - avg5), 2);
     }
 
     float stdDeviaton1 = sqrt(var1 / (*rowNumbers));
@@ -349,6 +407,7 @@ void ex05(int *rowNumbers, struct Student student[*rowNumbers])
         fprintf(sortedFile, "%d;%d;%d;%d;%d;%d;%d\n", student[i].student, student[i].disc1, student[i].disc2, student[i].disc3, student[i].disc4, student[i].disc5, student[i].year);
     }
 }
+
 int main()
 {
     clock_t start, end;
@@ -371,12 +430,20 @@ int main()
 
     readValues(&rowNumbers, file, student);
 
+    printf("-----------------------\n");
+    printf("Media, mediana e desvio padrao por ano: \n");
     ex01(&rowNumbers, student);
 
+    printf("-----------------------\n");
+    printf("Media, mediana e desvio padrao: \n");
     ex02(&rowNumbers, student);
 
+    printf("-----------------------\n");
+    printf("Melhor e pior desempenho: \n");
     ex03(&rowNumbers, student);
 
+    printf("-----------------------\n");
+    printf("Total de aprovados e reprovados: \n");
     ex04(&rowNumbers, student);
 
     fclose(file);
