@@ -15,15 +15,44 @@ void insertHead(Node **list, int data)
     *list = newNode;
 }
 
-void insertMid(Node **list, int data, int pos)
+void insertMidByPosition(Node **list, int data, int pos)
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
     newNode->data = data;
-    Node *temp = *list;
-    for (int i = 0; i < pos; i++)
-        temp = temp->next;
-    newNode->next = temp->next;
-    temp->next = newNode;
+    if (*list == NULL)
+    {
+        *list = newNode;
+        return;
+    }
+    else
+    {
+        Node *temp = *list;
+        for (int i = 0; i < pos; i++)
+            temp = temp->next;
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+}
+
+void insertMidByValue(Node **list, int data, int value)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    if (*list == NULL)
+    {
+        *list = newNode;
+        return;
+    }
+    else
+    {
+        Node *temp = *list;
+        while (temp->next && temp->data != value)
+        {
+            temp = temp->next;
+        }
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
 }
 
 void insertTail(Node **list, int data)
@@ -51,19 +80,38 @@ void printList(Node *list)
         printf(" %d", list->data);
         list = list->next;
     }
-    printf("]");
+    printf("]\n");
 }
 
 int main()
 {
     Node *list = NULL;
+    printList(list);
+
     insertHead(&list, 1);
+    printList(list);
+
     insertHead(&list, 1);
+    printList(list);
+
     insertHead(&list, 1);
+    printList(list);
+
     insertTail(&list, 3);
+    printList(list);
+
     insertTail(&list, 3);
+    printList(list);
+
     insertTail(&list, 3);
-    insertMid(&list, 2, 2);
-    insertMid(&list, 2, 6);
+    printList(list);
+
+    insertMidByPosition(&list, 2, 2);
+    printList(list);
+
+    insertMidByPosition(&list, 2, 6);
+    printList(list);
+
+    insertMidByValue(&list, 4, 3);
     printList(list);
 }
