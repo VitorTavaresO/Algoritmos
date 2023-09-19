@@ -7,18 +7,26 @@ typedef struct node
     struct node *next;
 } Node;
 
-void insertHead(Node **list, int data)
+Node *createNode(int data)
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
+    if (!newNode)
+        printf("Node not created.\n");
     newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void insertHead(Node **list, int data)
+{
+    Node *newNode = createNode(data);
     newNode->next = *list;
     *list = newNode;
 }
 
 void insertMidByPosition(Node **list, int data, int pos)
 {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
+    Node *newNode = createNode(data);
     if (*list == NULL)
     {
         *list = newNode;
@@ -36,8 +44,7 @@ void insertMidByPosition(Node **list, int data, int pos)
 
 void insertMidByValue(Node **list, int data, int value)
 {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
+    Node *newNode = createNode(data);
     if (*list == NULL)
     {
         *list = newNode;
@@ -57,8 +64,7 @@ void insertMidByValue(Node **list, int data, int value)
 
 void insertTail(Node **list, int data)
 {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
+    Node *newNode = createNode(data);
     newNode->next = NULL;
     if (*list == NULL)
     {
