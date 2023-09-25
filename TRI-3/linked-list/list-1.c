@@ -117,6 +117,30 @@ void remove_tail(Node **list)
     free(temp2);
 }
 
+void count_itens(Node **list)
+{
+    int count;
+    Node *temp = *list;
+    while (temp->next)
+    {
+        temp = temp->next;
+        count++;
+    }
+    printf("Quantidade de elementos: %d \n", count + 1);
+}
+
+void clear_list(Node **list)
+{
+    Node *temp = *list;
+    while (temp->next)
+    {
+        Node *temp2 = temp->next;
+        free(temp);
+        temp = temp2;
+    }
+    *list = NULL;
+}
+
 void print_list(Node *list)
 {
     printf("[");
@@ -145,7 +169,9 @@ int main()
         printf("6. Remover Meio por Posição\n");
         printf("7. Remover Meio por Valor\n");
         printf("8. Remover Cauda\n");
-        printf("9. Sair\n");
+        printf("9. Quantidade de elementos na lista\n");
+        printf("10. Limpar lista\n");
+        printf("17. Sair\n");
         printf("-----------------------");
         printf("Escolha uma opção: ");
         scanf("%d", &option);
@@ -195,6 +221,12 @@ int main()
             remove_tail(&list);
             break;
         case 9:
+            count_itens(&list);
+            break;
+        case 10:
+            clear_list(&list);
+            break;
+        case 17:
             alive = 0;
             break;
         }
