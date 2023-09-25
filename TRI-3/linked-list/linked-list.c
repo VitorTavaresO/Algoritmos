@@ -65,7 +65,6 @@ void insertMidByValue(Node **list, int data, int value)
 void insertTail(Node **list, int data)
 {
     Node *newNode = createNode(data);
-    newNode->next = NULL;
     if (*list == NULL)
     {
         *list = newNode;
@@ -74,6 +73,7 @@ void insertTail(Node **list, int data)
     Node *temp = *list;
     while (temp->next)
         temp = temp->next;
+    newNode->next = NULL;
     temp->next = newNode;
 }
 
