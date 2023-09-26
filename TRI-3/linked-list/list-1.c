@@ -141,6 +141,19 @@ void clear_list(Node **list)
     *list = NULL;
 }
 
+void greather_item(Node **list)
+{
+    Node *temp = *list;
+    int greather = temp->data;
+    do
+    {
+        temp = temp->next;
+        if (temp->data > greather)
+            greather = temp->data;
+    } while (temp->next);
+    printf("Maior Elemento: %d \n", greather);
+}
+
 void print_list(Node *list)
 {
     printf("[");
@@ -171,6 +184,7 @@ int main()
         printf("8. Remover Cauda\n");
         printf("9. Quantidade de elementos na lista\n");
         printf("10. Limpar lista\n");
+        printf("11. Maior elemento da lista\n");
         printf("17. Sair\n");
         printf("-----------------------");
         printf("Escolha uma opção: ");
@@ -225,6 +239,9 @@ int main()
             break;
         case 10:
             clear_list(&list);
+            break;
+        case 11:
+            greather_item(&list);
             break;
         case 17:
             alive = 0;
