@@ -126,7 +126,6 @@ int count_itens(Node **list)
         temp = temp->next;
         count++;
     }
-    printf("Quantidade de elementos: %d \n", count + 1);
     return count + 1;
 }
 
@@ -168,6 +167,21 @@ void average(Node **list, int count)
     printf("Média dos Elementos: %d \n", (sum / count));
 }
 
+void find_item(Node **list, int value, int count)
+{
+    Node *temp = *list;
+    for (int i = 0; i < count; i++)
+    {
+        if (temp->data == value)
+        {
+            printf("Valor encontrado\n");
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("Valor não encontrado");
+}
+
 void print_list(Node *list)
 {
     printf("[");
@@ -200,6 +214,7 @@ int main()
         printf("10. Limpar lista\n");
         printf("11. Maior elemento da lista\n");
         printf("12. Média dos valores da Lista\n");
+        printf("13. Valor existente na lista\n");
         printf("17. Sair\n");
         printf("-----------------------");
         printf("Escolha uma opção: ");
@@ -250,7 +265,7 @@ int main()
             remove_tail(&list);
             break;
         case 9:
-            count_itens(&list);
+            printf("Quantidade de elementos: %d \n", count_itens(&list));
             break;
         case 10:
             clear_list(&list);
@@ -260,6 +275,11 @@ int main()
             break;
         case 12:
             average(&list, count_itens(&list));
+            break;
+        case 13:
+            printf("Digite o valor a ser procurado: ");
+            scanf("%d", &value);
+            find_item(&list, value, count_itens(&list));
             break;
         case 17:
             alive = 0;
