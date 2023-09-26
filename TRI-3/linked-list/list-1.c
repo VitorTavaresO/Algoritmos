@@ -69,51 +69,46 @@ void insert_tail(int data, Node **list)
     newNode->next = NULL;
     temp->next = newNode;
 }
-
-void remove_head(Node **list)
+void remove_value(Node **list, int value)
 {
-    if (*list == NULL)
-        return;
-    Node *temp = *list;
-    *list = temp->next;
-    free(temp);
-}
-
-void remove_mid_position(Node **list, int pos)
-{
-    if (*list == NULL)
-        return;
-    Node *temp = *list;
-    for (int i = 1; i < pos; i++)
-        temp = temp->next;
-    Node *temp2 = temp->next;
-    temp->next = temp2->next;
-    free(temp2);
-}
-
-void remove_mid_value(Node **list, int value)
-{
-    if (*list == NULL)
-        return;
-    Node *temp = *list;
-    while (temp->next && temp->data != value)
+    if (*list != NULL)
     {
-        temp = temp->next;
+        Node *temp = *list;
+        if (temp->data == value)
+        {
+            *list = temp->next;
+            free(temp);
+        }
+        else
+        {
+            while (temp->next && (temp->next)->data != value)
+            {
+                temp = temp->next;
+            }
+            if (temp->next)
+            {
+                Node *remove = temp->next;
+                temp->next = remove->next;
+                free(remove);
+            }
+        }
     }
-    Node *temp2 = temp->next;
-    temp->next = temp2->next;
-    free(temp2);
 }
-
-void remove_tail(Node **list)
+void remove_position(Node **list, int pos)
 {
     if (*list == NULL)
         return;
     Node *temp = *list;
-    while ((temp->next)->next)
+    if (pos == 1)
+    {
+        *list = temp->next;
+        free(temp);
+        return;
+    }
+    for (int i = 2; i < pos; i++)
         temp = temp->next;
     Node *temp2 = temp->next;
-    temp->next = NULL;
+    temp->next = temp2->next;
     free(temp2);
 }
 
@@ -174,12 +169,12 @@ void find_item(Node **list, int value, int count)
     {
         if (temp->data == value)
         {
-            printf("Valor encontrado\n");
+            printf("value encontrado\n");
             return;
         }
         temp = temp->next;
     }
-    printf("Valor não encontrado");
+    printf("value não encontrado");
 }
 
 void ordenate_list(Node **list, int count, int order)
@@ -244,17 +239,17 @@ int main()
         printf("----------------------- \n");
         printf("1. Inserir Cabeça\n");
         printf("2. Inserir Meio por Posição\n");
-        printf("3. Inserir Meio por Valor\n");
+        printf("3. Inserir Meio por value\n");
         printf("4. Inserir Cauda\n");
-        printf("5. Remover Cabeça\n");
-        printf("6. Remover Meio por Posição\n");
-        printf("7. Remover Meio por Valor\n");
-        printf("8. Remover Cauda\n");
+        printf("5. remove Cabeça\n");
+        printf("6. remove Meio por Posição\n");
+        printf("7. remove Meio por value\n");
+        printf("8. remove Cauda\n");
         printf("9. Quantidade de elementos na lista\n");
         printf("10. Limpar lista\n");
         printf("11. Maior elemento da lista\n");
-        printf("12. Média dos valores da Lista\n");
-        printf("13. Valor existente na lista\n");
+        printf("12. Média dos valuees da Lista\n");
+        printf("13. value existente na lista\n");
         printf("14. Ordenar Lista\n");
         printf("17. Sair\n");
         printf("-----------------------");
@@ -263,13 +258,13 @@ int main()
         switch (option)
         {
         case 1:
-            printf("Digite o valor a ser inserido: ");
+            printf("Digite o value a ser inserido: ");
             int value;
             scanf("%d", &value);
             insert_head(value, &list);
             break;
         case 2:
-            printf("Digite o valor a ser inserido: ");
+            printf("Digite o value a ser inserido: ");
             scanf("%d", &value);
             printf("Digite a posição a ser inserido: ");
             int pos;
@@ -277,33 +272,27 @@ int main()
             insert_mid_position(value, &list, pos);
             break;
         case 3:
-            printf("Digite o valor a ser inserido: ");
+            printf("Digite o value a ser inserido: ");
             scanf("%d", &value);
-            printf("Digite o valor a ser procurado: ");
+            printf("Digite o value a ser procurado: ");
             int search;
             scanf("%d", &search);
             insert_mid_value(value, &list, search);
             break;
         case 4:
-            printf("Digite o valor a ser inserido: ");
+            printf("Digite o value a ser inserido: ");
             scanf("%d", &value);
             insert_tail(value, &list);
-            break;
-        case 5:
-            remove_head(&list);
             break;
         case 6:
             printf("Digite a posição a ser removida: ");
             scanf("%d", &pos);
-            remove_mid_position(&list, pos);
+            remove_position(&list, pos);
             break;
         case 7:
-            printf("Digite o valor a ser removida: ");
+            printf("Digite o value a ser removida: ");
             scanf("%d", &value);
-            remove_mid_position(&list, value);
-            break;
-        case 8:
-            remove_tail(&list);
+            remove_value(&list, value);
             break;
         case 9:
             printf("Quantidade de elementos: %d \n", count_itens(&list));
@@ -318,7 +307,7 @@ int main()
             average(&list, count_itens(&list));
             break;
         case 13:
-            printf("Digite o valor a ser procurado: ");
+            printf("Digite o value a ser procurado: ");
             scanf("%d", &value);
             find_item(&list, value, count_itens(&list));
             break;
