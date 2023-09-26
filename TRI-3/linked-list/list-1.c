@@ -182,6 +182,46 @@ void find_item(Node **list, int value, int count)
     printf("Valor não encontrado");
 }
 
+void ordenate_list(Node **list, int count, int order)
+{
+    Node *temp = *list;
+    int aux;
+    if (order == 0)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (temp->data > (temp->next)->data)
+                {
+                    aux = temp->data;
+                    temp->data = (temp->next)->data;
+                    (temp->next)->data = aux;
+                }
+                temp = temp->next;
+            }
+            temp = *list;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < count; i++)
+        {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (temp->data < (temp->next)->data)
+                {
+                    aux = temp->data;
+                    temp->data = (temp->next)->data;
+                    (temp->next)->data = aux;
+                }
+                temp = temp->next;
+            }
+            temp = *list;
+        }
+    }
+}
+
 void print_list(Node *list)
 {
     printf("[");
@@ -215,6 +255,7 @@ int main()
         printf("11. Maior elemento da lista\n");
         printf("12. Média dos valores da Lista\n");
         printf("13. Valor existente na lista\n");
+        printf("14. Ordenar Lista\n");
         printf("17. Sair\n");
         printf("-----------------------");
         printf("Escolha uma opção: ");
@@ -280,6 +321,12 @@ int main()
             printf("Digite o valor a ser procurado: ");
             scanf("%d", &value);
             find_item(&list, value, count_itens(&list));
+            break;
+        case 14:
+            printf("Digite o tipo de ordenação (crescente(0) ou decrescente(1)): ");
+            int order;
+            scanf("%d", &order);
+            ordenate_list(&list, count_itens(&list), order);
             break;
         case 17:
             alive = 0;
