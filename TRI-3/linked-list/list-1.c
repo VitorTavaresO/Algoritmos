@@ -117,7 +117,7 @@ void remove_tail(Node **list)
     free(temp2);
 }
 
-void count_itens(Node **list)
+int count_itens(Node **list)
 {
     int count;
     Node *temp = *list;
@@ -127,6 +127,7 @@ void count_itens(Node **list)
         count++;
     }
     printf("Quantidade de elementos: %d \n", count + 1);
+    return count + 1;
 }
 
 void clear_list(Node **list)
@@ -152,6 +153,19 @@ void greather_item(Node **list)
             greather = temp->data;
     } while (temp->next);
     printf("Maior Elemento: %d \n", greather);
+}
+
+void average(Node **list, int count)
+{
+    Node *temp = *list;
+    int sum = temp->data;
+    do
+    {
+        temp = temp->next;
+        sum += temp->data;
+    } while (temp->next);
+
+    printf("Média dos Elementos: %d \n", (sum / count));
 }
 
 void print_list(Node *list)
@@ -185,6 +199,7 @@ int main()
         printf("9. Quantidade de elementos na lista\n");
         printf("10. Limpar lista\n");
         printf("11. Maior elemento da lista\n");
+        printf("12. Média dos valores da Lista\n");
         printf("17. Sair\n");
         printf("-----------------------");
         printf("Escolha uma opção: ");
@@ -242,6 +257,9 @@ int main()
             break;
         case 11:
             greather_item(&list);
+            break;
+        case 12:
+            average(&list, count_itens(&list));
             break;
         case 17:
             alive = 0;
