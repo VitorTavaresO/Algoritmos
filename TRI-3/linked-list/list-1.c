@@ -217,6 +217,27 @@ void ordenate_list(Node **list, int count, int order)
     }
 }
 
+void remove_equal_itens(Node **list)
+{
+    Node *temp = *list;
+
+    while (temp)
+    {
+        Node *temp2 = temp->next;
+
+        while (temp2)
+        {
+            if (temp->data == temp2->data)
+            {
+                remove_value(list, temp->data);
+            }
+            temp2 = temp2->next;
+        }
+
+        temp = temp->next;
+    }
+}
+
 void print_list(Node *list)
 {
     printf("[");
@@ -239,18 +260,17 @@ int main()
         printf("----------------------- \n");
         printf("1. Inserir Cabeça\n");
         printf("2. Inserir Meio por Posição\n");
-        printf("3. Inserir Meio por value\n");
+        printf("3. Inserir Meio por Posição\n");
         printf("4. Inserir Cauda\n");
-        printf("5. remove Cabeça\n");
-        printf("6. remove Meio por Posição\n");
-        printf("7. remove Meio por value\n");
-        printf("8. remove Cauda\n");
-        printf("9. Quantidade de elementos na lista\n");
-        printf("10. Limpar lista\n");
-        printf("11. Maior elemento da lista\n");
-        printf("12. Média dos valuees da Lista\n");
-        printf("13. value existente na lista\n");
-        printf("14. Ordenar Lista\n");
+        printf("5. Remover por Posição\n");
+        printf("6. Remover por Valor\n");
+        printf("7. Quantidade de elementos na lista\n");
+        printf("8. Limpar lista\n");
+        printf("9. Maior elemento da lista\n");
+        printf("10. Média dos valores da Lista\n");
+        printf("11. Valor existente na lista\n");
+        printf("12. Ordenar Lista\n");
+        printf("13. Remover Itens Iguais\n");
         printf("17. Sair\n");
         printf("-----------------------");
         printf("Escolha uma opção: ");
@@ -284,38 +304,41 @@ int main()
             scanf("%d", &value);
             insert_tail(value, &list);
             break;
-        case 6:
+        case 5:
             printf("Digite a posição a ser removida: ");
             scanf("%d", &pos);
             remove_position(&list, pos);
             break;
-        case 7:
+        case 6:
             printf("Digite o value a ser removida: ");
             scanf("%d", &value);
             remove_value(&list, value);
             break;
-        case 9:
+        case 7:
             printf("Quantidade de elementos: %d \n", count_itens(&list));
             break;
-        case 10:
+        case 8:
             clear_list(&list);
             break;
-        case 11:
+        case 9:
             greather_item(&list);
             break;
-        case 12:
+        case 10:
             average(&list, count_itens(&list));
             break;
-        case 13:
+        case 11:
             printf("Digite o value a ser procurado: ");
             scanf("%d", &value);
             find_item(&list, value, count_itens(&list));
             break;
-        case 14:
+        case 12:
             printf("Digite o tipo de ordenação (crescente(0) ou decrescente(1)): ");
             int order;
             scanf("%d", &order);
             ordenate_list(&list, count_itens(&list), order);
+            break;
+        case 13:
+            remove_equal_itens(&list);
             break;
         case 17:
             alive = 0;
