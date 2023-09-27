@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <time.h>
 
 typedef struct node
 {
@@ -238,6 +239,15 @@ void remove_equal_itens(Node **list)
     }
 }
 
+void random_list(Node **list)
+{
+    srand(time(NULL));
+    for (int i = 0; i < 10; i++)
+    {
+        insert_head(rand() % 100, list);
+    }
+}
+
 void print_list(Node *list)
 {
     printf("[");
@@ -258,6 +268,7 @@ int main()
     {
         int option;
         printf("----------------------- \n");
+        printf("0. Random List\n");
         printf("1. Inserir Cabeça\n");
         printf("2. Inserir Meio por Posição\n");
         printf("3. Inserir Meio por Posição\n");
@@ -277,6 +288,9 @@ int main()
         scanf("%d", &option);
         switch (option)
         {
+        case 0:
+            random_list(&list);
+            break;
         case 1:
             printf("Digite o value a ser inserido: ");
             int value;
