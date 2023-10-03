@@ -65,14 +65,36 @@ int main()
 
     Stack stack;
     init(&stack);
-
-    for (int i = 0; i < 10; i++)
-        push(&stack, rand() % 100);
-
-    print_stack(&stack);
-    int data = pop(&stack);
-    printf("Data: %d\n", data);
-    print_stack(&stack);
-
+    int data;
+    int alive = 1;
+    while (alive)
+    {
+        int op;
+        printf("1 - Inserir na Pilha\n");
+        printf("2 - Remover da Pilha\n");
+        printf("3 - Imprimir Pilha\n");
+        printf("4 - Sair\n");
+        scanf("%d", &op);
+        switch (op)
+        {
+        case 1:
+            printf("Digite o valor: ");
+            scanf("%d", &data);
+            push(&stack, data);
+            break;
+        case 2:
+            pop(&stack);
+            break;
+        case 3:
+            print_stack(&stack);
+            break;
+        case 4:
+            alive = 0;
+            break;
+        default:
+            printf("Opção inválida.\n");
+            break;
+        }
+    }
     return 0;
 }
