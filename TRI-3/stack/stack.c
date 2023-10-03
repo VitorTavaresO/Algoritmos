@@ -37,7 +37,7 @@ int pop(Stack *stack)
     if (is_empty(stack))
     {
         printf("Pilha Vazia.\n");
-        return -1;
+        exit(1);
     }
     Node *temp = stack->top;
     int data = temp->data;
@@ -46,7 +46,7 @@ int pop(Stack *stack)
     return data;
 }
 
-void printStack(Stack *stack)
+void print_stack(Stack *stack)
 {
     Node *temp = stack->top;
     printf("[");
@@ -66,10 +66,13 @@ int main()
     Stack stack;
     init(&stack);
 
+    for (int i = 0; i < 10; i++)
+        push(&stack, rand() % 100);
+
     int data = pop(&stack);
-    printStack(&stack);
+    print_stack(&stack);
     printf("Data: %d\n", data);
-    printStack(&stack);
+    print_stack(&stack);
 
     return 0;
 }
