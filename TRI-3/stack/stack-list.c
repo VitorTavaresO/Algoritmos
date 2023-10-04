@@ -58,6 +58,27 @@ void print_stack(Stack *stack)
     printf("]\n");
 }
 
+void min_max_element(Stack *stack)
+{
+    Node *temp = stack->top;
+    int min = temp->data;
+    int max = temp->data;
+    while (temp)
+    {
+        if (temp->data < min)
+        {
+            min = temp->data;
+        }
+        if (temp->data > max)
+        {
+            max = temp->data;
+        }
+        temp = temp->next;
+    }
+    printf("Maior elemento: %d\n", max);
+    printf("Menor elemento: %d\n", min);
+}
+
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
@@ -73,10 +94,14 @@ int main()
         printf("1 - Inserir na Pilha\n");
         printf("2 - Remover da Pilha\n");
         printf("3 - Imprimir Pilha\n");
-        printf("4 - Sair\n");
+        printf("4 - Maior e Menor Elemento\n");
+        printf("0 - Sair\n");
         scanf("%d", &op);
         switch (op)
         {
+        case 0:
+            alive = 0;
+            break;
         case 1:
             printf("Digite o valor: ");
             scanf("%d", &data);
@@ -89,7 +114,7 @@ int main()
             print_stack(&stack);
             break;
         case 4:
-            alive = 0;
+            min_max_element(&stack);
             break;
         default:
             printf("Opção inválida.\n");
