@@ -12,16 +12,38 @@ typedef struct node
 typedef struct stack
 {
     Node *top;
+    struct stack *min;
+    struct stack *max;
 } Stack;
 
 void init(Stack *stack)
 {
     stack->top = NULL;
+    stack->min = (Stack *)malloc(sizeof(Stack));
+    stack->max = (Stack *)malloc(sizeof(Stack));
+    stack->min->top = NULL;
+    stack->max->top = NULL;
 }
 
 int is_empty(Stack *stack)
 {
     return stack->top == NULL;
+}
+
+void push_min(Stack *stack, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = stack->top;
+    stack->top = newNode;
+}
+
+void push_max(Stack *stack, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = stack->top;
+    stack->top = newNode;
 }
 
 void push(Stack *stack, int data)
@@ -30,6 +52,15 @@ void push(Stack *stack, int data)
     newNode->data = data;
     newNode->next = stack->top;
     stack->top = newNode;
+
+    if (is_empty(stack->min) || data <= stack->min->top->data)
+    {
+        push_min(stack->min, data);
+    }
+    if (is_empty(stack->max) || data >= stack->max->top->data)
+    {
+        push_max(stack->max, data);
+    }
 }
 
 int pop(Stack *stack)
