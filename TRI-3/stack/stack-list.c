@@ -12,38 +12,18 @@ typedef struct node
 typedef struct stack
 {
     Node *top;
-    struct stack *min;
-    struct stack *max;
+    int min;
+    int max;
 } Stack;
 
 void init(Stack *stack)
 {
     stack->top = NULL;
-    stack->min = (Stack *)malloc(sizeof(Stack));
-    stack->max = (Stack *)malloc(sizeof(Stack));
-    stack->min->top = NULL;
-    stack->max->top = NULL;
 }
 
 int is_empty(Stack *stack)
 {
     return stack->top == NULL;
-}
-
-void push_min(Stack *stack, int data)
-{
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
-    newNode->next = stack->top;
-    stack->top = newNode;
-}
-
-void push_max(Stack *stack, int data)
-{
-    Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = data;
-    newNode->next = stack->top;
-    stack->top = newNode;
 }
 
 void push(Stack *stack, int data)
@@ -52,18 +32,53 @@ void push(Stack *stack, int data)
     newNode->data = data;
     newNode->next = stack->top;
     stack->top = newNode;
+    if (data < stack->min)
+        stack->min = data;
+    if (data > stack->max)
+        stack->max = data;
+}
 
-    if (is_empty(stack->min) || data <= stack->min->top->data)
+void find_min(Stack *stack)
+{
+    if (is_empty(stack))
     {
-        push_min(stack->min, data);
+        printf("Pilha Vazia.\n");
+        return;
     }
-    if (is_empty(stack->max) || data >= stack->max->top->data)
+    Node *temp = stack->top;
+    stack->min = temp->data;
+
+    while (temp)
     {
-        push_max(stack->max, data);
+        if (temp->data < stack->min)
+        {
+            stack->min = temp->data;
+        }
+        temp = temp->next;
     }
 }
 
-void pop_min(Stack *stack)
+void find_max(Stack *stack)
+{
+    if (is_empty(stack))
+    {
+        printf("Pilha Vazia.\n");
+        return;
+    }
+    Node *temp = stack->top;
+    stack->max = temp->data;
+
+    while (temp)
+    {
+        if (temp->data > stack->max)
+        {
+            stack->max = temp->data;
+        }
+        temp = temp->next;
+    }
+}
+
+void pop(Stack *stack)
 {
     if (is_empty(stack))
     {
@@ -71,44 +86,15 @@ void pop_min(Stack *stack)
         exit(1);
     }
     Node *temp = stack->top;
-    stack->top = temp->next;
+    stack->top = stack->top->next;
+
+    if (temp->data == stack->min)
+        find_min(stack);
+    if (temp->data == stack->max)
+        find_max(stack);
+
     free(temp);
 }
-
-void pop_max(Stack *stack)
-{
-    if (is_empty(stack))
-    {
-        printf("Pilha Vazia.\n");
-        exit(1);
-    }
-    Node *temp = stack->top;
-    stack->top = temp->next;
-    free(temp);
-}
-
-int pop(Stack *stack)
-{
-    if (is_empty(stack))
-    {
-        printf("Pilha Vazia.\n");
-        exit(1);
-    }
-    Node *temp = stack->top;
-    stack->top = temp->next;
-    free(temp);
-    int data = temp->data;
-    if (data == stack->min->top->data)
-    {
-        pop_min(stack->min);
-    }
-    if (data == stack->max->top->data)
-    {
-        pop_max(stack->max);
-    }
-    return data;
-}
-
 void print_stack(Stack *stack)
 {
     Node *temp = stack->top;
@@ -128,17 +114,8 @@ int get_min(Stack *stack)
         printf("Pilha Vazia.\n");
         exit(1);
     }
-    Node *temp = stack->top;
-    int min = temp->data;
-    while (temp)
-    {
-        if (min > temp->data)
-        {
-            min = temp->data;
-        }
-        temp = temp->next;
-    }
-    return min;
+
+    return stack->min;
 }
 
 int get_max(Stack *stack)
@@ -148,17 +125,8 @@ int get_max(Stack *stack)
         printf("Pilha Vazia.\n");
         exit(1);
     }
-    Node *temp = stack->top;
-    int max = temp->data;
-    while (temp)
-    {
-        if (max < temp->data)
-        {
-            max = temp->data;
-        }
-        temp = temp->next;
-    }
-    return max;
+
+    return stack->max;
 }
 
 int main()
