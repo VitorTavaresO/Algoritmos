@@ -42,7 +42,6 @@ void find_min(Stack *stack)
 {
     if (is_empty(stack))
     {
-        printf("Pilha Vazia.\n");
         return;
     }
     Node *temp = stack->top;
@@ -62,7 +61,6 @@ void find_max(Stack *stack)
 {
     if (is_empty(stack))
     {
-        printf("Pilha Vazia.\n");
         return;
     }
     Node *temp = stack->top;
