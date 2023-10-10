@@ -50,7 +50,7 @@ void print_stack(Stack *stack)
     printf("[ ");
     while (temp)
     {
-        printf("%d ", temp->data);
+        printf("%c ", temp->data);
         temp = temp->next;
     }
     printf("]\n");
@@ -59,32 +59,38 @@ void print_stack(Stack *stack)
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
-    printf("Informe a expressão desejada(Sem espaços):");
-    char expression[70];
-    scanf("%s", expression);
+
     Stack stack;
     init(&stack);
-    int i = 0;
+    char data[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    int screen = 0;
     int alive = 1;
+    push(&stack, data[screen]);
     while (alive)
     {
-        if (expression[i] == '(')
+        print_stack(&stack);
+        printf("Escola as opções de Navegação\n");
+        printf("Tela Atual: %c\n", data[screen]);
+        printf("1 - Avançar\n");
+        printf("2 - Voltar\n");
+        printf("3 - Sair\n");
+        int op;
+        scanf("%d", &op);
+        switch (op)
         {
-            push(&stack, expression[i]);
-        }
-        else if (expression[i] == ')')
-        {
+        case 1:
+            screen++;
+            push(&stack, data[screen]);
+            break;
+        case 2:
             pop(&stack);
-        }
-        else if (expression[i] == '\0')
+            screen--;
+            break;
+        case 3:
             alive = 0;
-
-        i++;
+            break;
+        }
     }
-    if (is_empty(&stack))
-        printf("Expressão Válida!");
-    else
-        printf("Expressão Inválida");
 
     return 0;
 }

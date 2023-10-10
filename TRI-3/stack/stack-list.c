@@ -164,7 +164,6 @@ int get_max(Stack *stack)
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
-    srand(time(NULL));
 
     Stack stack;
     init(&stack);
