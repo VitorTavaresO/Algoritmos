@@ -58,25 +58,44 @@ void print_stack(Stack *stack)
     printf("]\n");
 }
 
-void min_max_element(Stack *stack)
+int get_min(Stack *stack)
 {
+    if (is_empty(stack))
+    {
+        printf("Pilha Vazia.\n");
+        exit(1);
+    }
     Node *temp = stack->top;
     int min = temp->data;
-    int max = temp->data;
     while (temp)
     {
-        if (temp->data < min)
+        if (min > temp->data)
         {
             min = temp->data;
         }
-        if (temp->data > max)
+        temp = temp->next;
+    }
+    return min;
+}
+
+int get_max(Stack *stack)
+{
+    if (is_empty(stack))
+    {
+        printf("Pilha Vazia.\n");
+        exit(1);
+    }
+    Node *temp = stack->top;
+    int max = temp->data;
+    while (temp)
+    {
+        if (max < temp->data)
         {
             max = temp->data;
         }
         temp = temp->next;
     }
-    printf("Maior elemento: %d\n", max);
-    printf("Menor elemento: %d\n", min);
+    return max;
 }
 
 int main()
@@ -94,7 +113,8 @@ int main()
         printf("1 - Inserir na Pilha\n");
         printf("2 - Remover da Pilha\n");
         printf("3 - Imprimir Pilha\n");
-        printf("4 - Maior e Menor Elemento\n");
+        printf("4 - Menor Elemento\n");
+        printf("5 - Maior Elemento\n");
         printf("0 - Sair\n");
         scanf("%d", &op);
         switch (op)
@@ -114,7 +134,10 @@ int main()
             print_stack(&stack);
             break;
         case 4:
-            min_max_element(&stack);
+            printf("Menor Elemento: %d \n", get_min(&stack));
+            break;
+        case 5:
+            printf("Maior Elemento: %d \n", get_max(&stack));
             break;
         default:
             printf("Opção inválida.\n");
