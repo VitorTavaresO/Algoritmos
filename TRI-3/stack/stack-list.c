@@ -63,6 +63,30 @@ void push(Stack *stack, int data)
     }
 }
 
+void pop_min(Stack *stack)
+{
+    if (is_empty(stack))
+    {
+        printf("Pilha Vazia.\n");
+        exit(1);
+    }
+    Node *temp = stack->top;
+    stack->top = temp->next;
+    free(temp);
+}
+
+void pop_max(Stack *stack)
+{
+    if (is_empty(stack))
+    {
+        printf("Pilha Vazia.\n");
+        exit(1);
+    }
+    Node *temp = stack->top;
+    stack->top = temp->next;
+    free(temp);
+}
+
 int pop(Stack *stack)
 {
     if (is_empty(stack))
@@ -71,9 +95,17 @@ int pop(Stack *stack)
         exit(1);
     }
     Node *temp = stack->top;
-    int data = temp->data;
     stack->top = temp->next;
     free(temp);
+    int data = temp->data;
+    if (data == stack->min->top->data)
+    {
+        pop_min(stack->min);
+    }
+    if (data == stack->max->top->data)
+    {
+        pop_max(stack->max);
+    }
     return data;
 }
 
