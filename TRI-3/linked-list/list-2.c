@@ -189,6 +189,51 @@ float average(List *list, int size)
     return ((float)sum / (float)size);
 }
 
+void ordenate_list(List *list, int count, int order)
+{
+    if (is_empty(list))
+        return;
+
+    Node *temp = list->top;
+    int aux;
+    switch (order)
+    {
+    case 1:
+        for (int i = 0; i < count; i++)
+        {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (temp->data > (temp->next)->data)
+                {
+                    aux = temp->data;
+                    temp->data = ((temp->next)->data);
+                    ((temp->next)->data) = aux;
+                }
+                temp = temp->next;
+            }
+            temp = list->top;
+        }
+        break;
+
+    case 2:
+        for (int i = 0; i < count; i++)
+        {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (temp->data < (temp->next)->data)
+                {
+                    aux = temp->data;
+                    temp->data = ((temp->next)->data);
+                    ((temp->next)->data) = aux;
+                }
+                temp = temp->next;
+            }
+            temp = list->top;
+        }
+        break;
+    }
+}
+
 void random_list(List *list)
 {
     srand(time(NULL));
@@ -219,6 +264,7 @@ int main()
         printf("8 - Limpar Lista\n");
         printf("9 - Maior Elemento\n");
         printf("10 - Média dos Elementos\n");
+        printf("11 - Ordenar Lista\n");
         int op;
         int data;
         int value;
@@ -269,8 +315,12 @@ int main()
             printf("A média é %2.f\n", average(&list, count_itens(&list)));
             break;
         case 11:
+            int order;
             printf("1 - Crescente\n");
             printf("2 - Decrescente\n");
+            scanf("%d", &order);
+            ordenate_list(&list, count_itens(&list), order);
+            break;
         }
     }
 }
