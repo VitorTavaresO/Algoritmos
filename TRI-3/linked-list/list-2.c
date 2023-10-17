@@ -84,6 +84,54 @@ void insert_tail(List *list, int data)
     temp->next = newNode;
 }
 
+void remove_head(List *list)
+{
+    if (!list->top)
+    {
+        printf("Lista Vazia!\n");
+        return;
+    }
+
+    Node *temp = list->top;
+    list->top = temp->next;
+    free(temp);
+}
+
+void remove_mid(List *list, int data)
+{
+    if (!list->top)
+    {
+        printf("Lista Vazia!\n");
+        return;
+    }
+
+    Node *temp = list->top;
+    while (temp->next && ((temp->next)->data != data))
+        temp = temp->next;
+    temp->next = (temp->next)->next;
+    temp = temp->next;
+    free(temp);
+}
+
+void remove_tail(List *list)
+{
+    if (!list->top)
+    {
+        printf("Lista Vazia!\n");
+        return;
+    }
+    if (!list->top->next)
+    {
+        remove_head(list);
+        return;
+    }
+    Node *temp = list->top;
+    while ((temp->next)->next)
+        temp = temp->next;
+    free((temp->next)->next);
+    temp->next = NULL;
+}
+
 void random_list(List *list)
 {
     srand(time(NULL));
@@ -137,15 +185,15 @@ int main()
             insert_tail(&list, data);
             break;
         case 4:
-            // remove_head(&list);
+            remove_head(&list);
             break;
         case 5:
             printf("Digite o valor: ");
             scanf("%d", &data);
-            // remove_middle(&list, data);
+            remove_mid(&list, data);
             break;
         case 6:
-            // remove_tail(&list);
+            remove_tail(&list);
             break;
         }
     }
