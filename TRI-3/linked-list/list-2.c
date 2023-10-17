@@ -154,6 +154,27 @@ void clear_list(List *list)
     list->top = NULL;
 }
 
+int max_number(List *list)
+{
+    if (is_empty(list))
+    {
+        printf("Lista Vazia!");
+    }
+    else
+    {
+        Node *temp = list->top;
+
+        int max = temp->data;
+        while (temp)
+        {
+            if (max < temp->data)
+                max = temp->data;
+            temp = temp->next;
+        }
+        return max;
+    }
+}
+
 void random_list(List *list)
 {
     srand(time(NULL));
@@ -182,6 +203,7 @@ int main()
         printf("6 - Remover do fim\n");
         printf("7 - Quantidade de Itens\n");
         printf("8 - Limpar Lista\n");
+        printf("9 - Maior Elemento\n");
         int op;
         int data;
         int value;
@@ -224,6 +246,9 @@ int main()
             break;
         case 8:
             clear_list(&list);
+            break;
+        case 9:
+            printf("Maior elemento é %d\n", max_number(&list));
             break;
         }
     }
