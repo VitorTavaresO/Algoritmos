@@ -140,6 +140,20 @@ int count_itens(List *list)
     return count;
 }
 
+void clear_list(List *list)
+{
+    if (is_empty(list))
+        return;
+    Node *temp = list->top;
+    while (temp->next)
+    {
+        Node *remove = temp;
+        free(remove);
+        temp = temp->next;
+    }
+    list->top = NULL;
+}
+
 void random_list(List *list)
 {
     srand(time(NULL));
@@ -167,6 +181,7 @@ int main()
         printf("5 - Remover do meio por valor\n");
         printf("6 - Remover do fim\n");
         printf("7 - Quantidade de Itens\n");
+        printf("8 - Limpar Lista\n");
         int op;
         int data;
         int value;
@@ -206,6 +221,9 @@ int main()
             break;
         case 7:
             printf("A lista tem %d elementos\n", count_itens(&list));
+            break;
+        case 8:
+            clear_list(&list);
             break;
         }
     }
