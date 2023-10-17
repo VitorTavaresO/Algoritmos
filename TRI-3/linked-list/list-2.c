@@ -175,6 +175,20 @@ int max_number(List *list)
     }
 }
 
+float average(List *list, int size)
+{
+    if (is_empty(list))
+        return 0;
+    Node *temp = list->top;
+    int sum = 0;
+    while (temp)
+    {
+        sum = sum + temp->data;
+        temp = temp->next;
+    }
+    return ((float)sum / (float)size);
+}
+
 void random_list(List *list)
 {
     srand(time(NULL));
@@ -204,6 +218,7 @@ int main()
         printf("7 - Quantidade de Itens\n");
         printf("8 - Limpar Lista\n");
         printf("9 - Maior Elemento\n");
+        printf("10 - Média dos Elementos\n");
         int op;
         int data;
         int value;
@@ -250,6 +265,12 @@ int main()
         case 9:
             printf("Maior elemento é %d\n", max_number(&list));
             break;
+        case 10:
+            printf("A média é %2.f\n", average(&list, count_itens(&list)));
+            break;
+        case 11:
+            printf("1 - Crescente\n");
+            printf("2 - Decrescente\n");
         }
     }
 }
