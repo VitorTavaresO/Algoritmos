@@ -19,6 +19,11 @@ void init(List *list)
     list->top = NULL;
 }
 
+int is_empty(List *list)
+{
+    return (!list->top);
+}
+
 Node *createNode(int data)
 {
     Node *newNode = (Node *)malloc(sizeof(Node));
@@ -86,12 +91,8 @@ void insert_tail(List *list, int data)
 
 void remove_head(List *list)
 {
-    if (!list->top)
-    {
-        printf("Lista Vazia!\n");
+    if (is_empty(list))
         return;
-    }
-
     Node *temp = list->top;
     list->top = temp->next;
     free(temp);
@@ -99,12 +100,8 @@ void remove_head(List *list)
 
 void remove_mid(List *list, int data)
 {
-    if (!list->top)
-    {
-        printf("Lista Vazia!\n");
+    if (is_empty(list))
         return;
-    }
-
     Node *temp = list->top;
     while (temp->next && ((temp->next)->data != data))
         temp = temp->next;
@@ -115,11 +112,8 @@ void remove_mid(List *list, int data)
 
 void remove_tail(List *list)
 {
-    if (!list->top)
-    {
-        printf("Lista Vazia!\n");
+    if (is_empty(list))
         return;
-    }
     if (!list->top->next)
     {
         remove_head(list);
@@ -130,6 +124,20 @@ void remove_tail(List *list)
         temp = temp->next;
     free((temp->next)->next);
     temp->next = NULL;
+}
+
+int count_itens(List *list)
+{
+    if (is_empty(list))
+        return 0;
+    Node *temp = list->top;
+    int count = 0;
+    while (temp)
+    {
+        temp = temp->next;
+        count++;
+    }
+    return count;
 }
 
 void random_list(List *list)
@@ -158,6 +166,7 @@ int main()
         printf("4 - Remover do início\n");
         printf("5 - Remover do meio por valor\n");
         printf("6 - Remover do fim\n");
+        printf("7 - Quantidade de Itens\n");
         int op;
         int data;
         int value;
@@ -194,6 +203,9 @@ int main()
             break;
         case 6:
             remove_tail(&list);
+            break;
+        case 7:
+            printf("A lista tem %d elementos\n", count_itens(&list));
             break;
         }
     }
